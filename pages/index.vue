@@ -9,12 +9,15 @@
     <div v-if="menu == false">
       <div v-for="index in 3" :key="index" class="container">
         <v-card width="350px">
-          <v-img :src="require('../assets/' + pics[index - 1 + (3 * comic)])"></v-img>
-          <v-card-title>{{apiTab[0].data.title}}</v-card-title>            <!-- {{table[index - 1 + (3 * comic)]}} -->
-          <v-card-text></v-card-text>                   <!-- {{desc[index - 1 + (3 * comic)]}} -->
+          <v-img :src="apiTab[comic + index - 1].data.img"></v-img>
+          <v-card-title>{{apiTab[comic + index - 1].data.title}}</v-card-title>            <!-- {{table[index - 1 + (3 * comic)]}} -->
+          <v-card-text>{{apiTab[comic + index - 1].data.alt}}</v-card-text>                   <!-- {{desc[index - 1 + (3 * comic)]}} -->
           <v-card-actions>
-            <v-spacer></v-spacer>
+            <v-spacer>
+              <v-card-text>Comic n°{{apiTab[comic + index - 1].data.num}}</v-card-text>
+            </v-spacer>
             <v-btn @click="likeItem(index)" icon>
+              {{index}}
               <v-icon v-if="liked[index - 1 + (3 * comic)]==true" color="red darken-1">mdi-heart</v-icon>
               <v-icon v-else>mdi-heart</v-icon>
             </v-btn>
@@ -58,7 +61,6 @@
     data() {
       return {
         menu: true,
-        info: this.$store.state.info,
         apiTab: this.$store.state.apiTab,
         errored: false,
         max_comic: 1,
@@ -90,14 +92,14 @@
       async getApi(idx) {
         axios
         .get('https://cors-anywhere.herokuapp.com/http://xkcd.com/' + (this.comic + 1 + idx) + '/info.0.json')
-        .then(response => (this.$store.commit('setInfo', response), this.$store.commit('setTab', {"info":response, "index": idx})))
+        .then(response => (this.$store.commit('setTab', {"info":response, "index": idx})))
         .catch(error => {
           console.log(error)
           this.errored = true
         })
       },
       prevComic() {
-        if (this.comic -1 >= 0)
+        if (this.comic - 1 >= 0)
           this.comic -= 1;
         for (let idx = 0; idx < this.apiTab.length; idx++) {
           this.getApi(idx)

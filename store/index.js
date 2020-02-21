@@ -15,7 +15,7 @@ const store = () => {
                 state.info = info;
             },
             inverseLike(state, index) {
-                state.liked[index] = !state.liked[index];
+                state.liked[index - 1] = !state.liked[index - 1];
             }
         }
     })
