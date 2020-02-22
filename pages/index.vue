@@ -7,17 +7,22 @@
 
 
     <div v-if="menu == false">
+      <div class="page-handler">
+        <v-btn @click="prevComic()" style="margin-left: 10px">Prev Page</v-btn>
+        <v-card class="d-inline-flex pa-2 mx-auto">{{comic + 1}}</v-card>
+        <v-btn @click="nextComic()" style="margin-right: 10px">Next Page</v-btn>
+      </div>
       <div v-for="index in 3" :key="index" class="container">
+      <nuxt ref="cards"/>
         <v-card width="350px">
-          <v-img :src="apiTab[comic + index - 1].data.img"></v-img>
-          <v-card-title>{{apiTab[comic + index - 1].data.title}}</v-card-title>            <!-- {{table[index - 1 + (3 * comic)]}} -->
-          <v-card-text>{{apiTab[comic + index - 1].data.alt}}</v-card-text>                   <!-- {{desc[index - 1 + (3 * comic)]}} -->
+          <v-img :src="apiTab[index - 1].data.img"></v-img>
+          <v-card-title>{{$store.mutations.getTitle(index)}}</v-card-title>
+          <v-card-text>{{apiTab[index - 1].data.alt}}</v-card-text>
           <v-card-actions>
             <v-spacer>
-              <v-card-text>Comic n°{{apiTab[comic + index - 1].data.num}}</v-card-text>
+              <v-card-text>Comic n°{{apiTab[index - 1].data.num}}</v-card-text>
             </v-spacer>
             <v-btn @click="likeItem(index)" icon>
-              {{index}}
               <v-icon v-if="liked[index - 1 + (3 * comic)]==true" color="red darken-1">mdi-heart</v-icon>
               <v-icon v-else>mdi-heart</v-icon>
             </v-btn>
@@ -29,6 +34,7 @@
         <v-card class="d-inline-flex pa-2 mx-auto">{{comic + 1}}</v-card>
         <v-btn @click="nextComic()" style="margin-right: 10px">Next Page</v-btn>
       </div>
+      </nuxt>
     </div>
 
 
@@ -63,7 +69,7 @@
         menu: true,
         apiTab: this.$store.state.apiTab,
         errored: false,
-        max_comic: 1,
+        max_comic: 900,
         comic: 0,
         liked: this.$store.state.liked,
         table: ["SITH EMPIRE", "REBEL ALLIANCE", "GALACTIC EMPIRE", "Such incident", "Such irony", "Such style"],
@@ -80,7 +86,6 @@
       }
     },
 
-
     methods: {
       async init () {
         console.log("Initiating...")
@@ -90,8 +95,8 @@
         this.menu = false;
       },
       async getApi(idx) {
-        axios
-        .get('https://cors-anywhere.herokuapp.com/http://xkcd.com/' + (this.comic + 1 + idx) + '/info.0.json')
+        await axios
+        .get('https://cors-anywhere.herokuapp.com/http://xkcd.com/' + (this.comic * 3 + idx + 1) + '/info.0.json')
         .then(response => (this.$store.commit('setTab', {"info":response, "index": idx})))
         .catch(error => {
           console.log(error)
@@ -99,23 +104,34 @@
         })
       },
       prevComic() {
+        console.log(this.comic)
         if (this.comic - 1 >= 0)
           this.comic -= 1;
-        for (let idx = 0; idx < this.apiTab.length; idx++) {
-          this.getApi(idx)
+        console.log(this.comic)
+        for (let idx = 1; idx <= this.apiTab.length; idx++) {
+          this.getApi(idx);
+          console.log(this.comic * 3 + 1);
         }
+        this.$refs.cards.$forceUpdate()
       },
       nextComic() {
+        console.log(this.comic)
         if (this.comic + 1 <= this.max_comic)
           this.comic += 1;
-        for (let idx = 0; idx < this.apiTab.length; idx++) {
-          this.getApi(idx)
+        console.log(this.comic)
+        for (let idx = 1; idx <= this.apiTab.length; idx++) {
+          this.getApi(idx);
+          console.log(this.comic * 3 + 1);
         }
+        this.$refs.cards.$forceUpdate()
       },
       likeItem(index) {
         this.liked[index - 1] = !this.liked[index - 1];
         this.$set(this.liked, index, this.liked[index])
         this.$store.commit('inverseLike', index);
+      },
+      printItem(item) {
+        console.log(item);
       }
     }
   }
