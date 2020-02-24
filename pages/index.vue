@@ -15,18 +15,16 @@
       <div v-if="apiTab[0] != null">
         <div v-for="index in 3" :key="index" class="container">
           <div v-if="comic + index <= max_comic">
-            <!-- <nuxt ref="cards"/> -->
-              <v-card width="350px">
-                <v-img :src="apiTab[index - 1].data.img"></v-img>
-                <v-card-title>{{apiTab[index - 1].data.title}}</v-card-title>
-                <v-card-text>{{apiTab[index - 1].data.alt}}</v-card-text>
-                <v-card-actions>
-                  <v-spacer>
-                    <v-card-text>Comic n°{{apiTab[index - 1].data.num}}</v-card-text>
-                  </v-spacer>
-                </v-card-actions>
-              </v-card>
-            <!-- </nuxt> -->
+            <v-card width="350px">
+              <v-img :src="apiTab[index - 1].data.img"></v-img>
+              <v-card-title>{{apiTab[index - 1].data.title}}</v-card-title>
+              <v-card-text>{{apiTab[index - 1].data.alt}}</v-card-text>
+              <v-card-actions>
+                <v-spacer>
+                  <v-card-text>Comic n°{{apiTab[index - 1].data.num}}</v-card-text>
+                </v-spacer>
+              </v-card-actions>
+            </v-card>
           </div>
         </div>
         <div class="page-handler">
