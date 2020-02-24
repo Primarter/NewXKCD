@@ -5,7 +5,6 @@
     <v-toolbar-title>XKCD 2.0</v-toolbar-title>
     </v-app-bar>
 
-
     <div v-if="menu == false">
       <div id="start"></div>
       <div class="page-handler">
@@ -13,28 +12,38 @@
         <v-card class="d-inline-flex pa-2 mx-auto">{{comic + 1}}</v-card>
         <v-btn @click="nextComic()" style="margin-right: 10px">Next Page</v-btn>
       </div>
-      <div v-for="index in 3" :key="index" class="container">
-        <nuxt ref="cards"/>
-          <v-card width="350px">
-            <v-img :src="apiTab[index - 1].data.img"></v-img>
-            <v-card-title>{{apiTab[index - 1].data.title}}</v-card-title>
-            <v-card-text>{{apiTab[index - 1].data.alt}}</v-card-text>
-            <v-card-actions>
-              <v-spacer>
-                <v-card-text>Comic n°{{apiTab[index - 1].data.num}}</v-card-text>
-              </v-spacer>
-            </v-card-actions>
-          </v-card>
-        </nuxt>
+      <div v-if="apiTab[0] != null">
+        <div v-for="index in 3" :key="index" class="container">
+          <div v-if="comic + index <= max_comic">
+            <!-- <nuxt ref="cards"/> -->
+              <v-card width="350px">
+                <v-img :src="apiTab[index - 1].data.img"></v-img>
+                <v-card-title>{{apiTab[index - 1].data.title}}</v-card-title>
+                <v-card-text>{{apiTab[index - 1].data.alt}}</v-card-text>
+                <v-card-actions>
+                  <v-spacer>
+                    <v-card-text>Comic n°{{apiTab[index - 1].data.num}}</v-card-text>
+                  </v-spacer>
+                </v-card-actions>
+              </v-card>
+            <!-- </nuxt> -->
+          </div>
+        </div>
+        <div class="page-handler">
+          <v-btn @click="prevComic()" style="margin-left: 10px">Prev Page</v-btn>
+          <v-card class="d-inline-flex pa-2 mx-auto">{{comic + 1}}</v-card>
+          <v-btn @click="nextComic()" style="margin-right: 10px">Next Page</v-btn>
+        </div>
+        <v-btn href="#start">
+          Top of the page
+        </v-btn>
       </div>
-      <div class="page-handler">
-        <v-btn @click="prevComic()" style="margin-left: 10px">Prev Page</v-btn>
-        <v-card class="d-inline-flex pa-2 mx-auto">{{comic + 1}}</v-card>
-        <v-btn @click="nextComic()" style="margin-right: 10px">Next Page</v-btn>
+      <div v-else>
+      <v-card>
+        <v-card-title>XKCD's API is not responding</v-card-title>
+        <v-card-text>F12 for precise error.</v-card-text>
+      </v-card>
       </div>
-      <v-btn href="#start">
-        Top of the page
-      </v-btn>
     </div>
 
 
@@ -69,20 +78,19 @@
         menu: true,
         errored: false,
         max_comic: 900,
+        info: null,
+        stInfo: this.$store.state.info,
         apiTab: this.$store.state.apiTab,
         comic: 0,
-        table: ["SITH EMPIRE", "REBEL ALLIANCE", "GALACTIC EMPIRE", "Such incident", "Such irony", "Such style"],
-        pics: ["Sith.png", "Rebel_alliance.png", "The_empire.png", "Incident-Reddit.png", "ironic-KonwYourMeme.jpg", "QuigonBeach-YT.jpg"],
-        desc: ["ex: Darth Revan", "ex: Luke Skywalker", "ex: Palpatine", "reddit.com", "know your meme", "youtube"],
       }
     },
-
 
     mounted () {
       for (let idx = 0; idx < this.apiTab.length; idx++) {
         this.getApi(idx)
         console.log("Mounting...")
       }
+      this.getCurrentComic()
     },
     methods: {
       async init () {
@@ -90,7 +98,19 @@
         for (let idx = 0; idx < this.apiTab.length; idx++) {
           this.getApi(idx)
         }
+        this.getCurrentComic()
         this.menu = false;
+        if (this.info != null)
+          this.max_comic = this.info.data.num / 3;
+      },
+      async getCurrentComic() {
+        await axios
+        .get('https://cors-anywhere.herokuapp.com/http://xkcd.com/info.0.json')
+        .then(response => (this.info = response, this.$store.commit('setInfo', response)))
+        .catch(error => {
+          console.log(error)
+          this.errored = true
+        })
       },
       async getApi(idx) {
         await axios
