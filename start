@@ -1,3 +1,5 @@
 #!/bin/bash
 HOST=0.0.0.0 yarn dev &
+echo "Starting..."
+sleep 3s
 sensible-browser http://10.101.52.143:3000/
