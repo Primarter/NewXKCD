@@ -25,8 +25,10 @@ NPM:
 
 Then, just type ```cd NewXKCD``` to go in the cloned repository.
 
+You will need to have vue js installed, type ```npm install vue```
+
 ## Launch the app
-To launch the app, just type ```./start``` in your terminal, it will open a new browser window and get you on the website in a few seconds. If it lasts too long, report it to the owner (see Sidenotes).
+To launch the app, just type ```./start``` in your terminal. Then you will see a small window where there is written "listenin on: [ip-adress]". You just have to ctrl+click on the adress or copy it in your favorite browser. This will get you on the website.
 
 You may have to refresh the page after a few seconds to let yarn the time needed to start, if it didn't show you the page directly.
 
