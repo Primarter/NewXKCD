@@ -16,7 +16,11 @@
         <div v-for="index in 10" :key="index" class="container">
           <div v-if="comic + index <= max_comic">
             <v-card width="350px">
-              <v-img :src="apiTab[index - 1].data.img"></v-img>
+              <v-img :src="apiTab[index - 1].data.img">
+                <template v-slot:placeholder>
+                  {{apiTab[index - 1].data.img}}
+                </template>
+              </v-img>
               <v-card-title>{{apiTab[index - 1].data.title}}</v-card-title>
               <v-card-text>{{apiTab[index - 1].data.alt}}</v-card-text>
               <v-card-actions>
@@ -28,9 +32,9 @@
           </div>
         </div>
         <div class="page-handler">
-          <v-btn @click="prevComic()" style="margin-left: 10px">Prev Page</v-btn>
+          <v-btn href="#start" @click="prevComic()" style="margin-left: 10px">Prev Page</v-btn>
           <v-card class="d-inline-flex pa-2 mx-auto">{{comic + 1}}</v-card>
-          <v-btn @click="nextComic()" style="margin-right: 10px">Next Page</v-btn>
+          <v-btn href="#start" @click="nextComic()" style="margin-right: 10px">Next Page</v-btn>
         </div>
         <v-btn href="#start">
           Top of the page
