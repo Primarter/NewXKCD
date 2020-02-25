@@ -28,7 +28,7 @@ This web-app was made using Vue js and Nuxt js:
 ## Launch the app
 To launch the app, just type ```./start``` in your terminal, it will open a new browser window and get you on the website.
 
-You will have to refresh the page after a few seconds to let yarn the time needed to start.
+You may have to refresh the page after a few seconds to let yarn the time needed to start, if it didn't show you the page directly.
 
 If you wish to do it yourself as a **"true coder"**, you can still type ```HOST=0.0.0.0 yarn dev; sensible-browser http://10.101.52.143:3000/```
 

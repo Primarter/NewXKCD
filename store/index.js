@@ -3,7 +3,7 @@ import Vuex from 'vuex';
 const store = () => {
     return new Vuex.Store({
         state: {
-            apiTab: [null, null, null],
+            apiTab: [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null],
             info: null,
         },
         mutations: {
