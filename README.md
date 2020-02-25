@@ -9,24 +9,24 @@ This project is only maintained for Ubuntu right now, any contribution or feedba
 
 You will need to install cURL:
 
-```sudo apt-get upgrade; sudo apt-get install cURL```
+```sudo apt-get upgrade; sudo apt-get install curl```
 
-and Yarn:
+and Yarn or NPM:
 
+Yarn: 
 ```curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -```
 
 ```echo “deb https://dl.yarnpkg.com/debian/ stable main” | sudo tee /etc/apt/sources.list.d/yarn.list```
 
 ```sudo apt-get update; sudo apt-get install yarn```
 
-This web-app was made using Vue js and Nuxt js:
+NPM: 
+```sudo apt-get install npm```
 
-```yarn add global vue```
-
-```yarn add global @vue/cli @vue/cli-init```
+Then, just type ```cd NewXKCD``` to go in the cloned repository.
 
 ## Launch the app
-To launch the app, just type ```./start``` in your terminal, it will open a new browser window and get you on the website.
+To launch the app, just type ```./start``` in your terminal, it will open a new browser window and get you on the website in a few seconds. If it lasts too long, report it to the owner (see Sidenotes).
 
 You may have to refresh the page after a few seconds to let yarn the time needed to start, if it didn't show you the page directly.
 

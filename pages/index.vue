@@ -13,7 +13,7 @@
         <v-btn @click="nextComic()" style="margin-right: 10px">Next Page</v-btn>
       </div>
       <div v-if="apiTab[0] != null">
-        <div v-for="index in 15" :key="index" class="container">
+        <div v-for="index in 10" :key="index" class="container">
           <div v-if="comic + index <= max_comic">
             <v-card width="350px">
               <v-img :src="apiTab[index - 1].data.img"></v-img>
@@ -99,7 +99,7 @@
         this.getCurrentComic()
         this.menu = false;
         if (this.info != null)
-          this.max_comic = this.info.data.num / 15;
+          this.max_comic = this.info.data.num / 10;
       },
       async getCurrentComic() {
         await axios
@@ -112,7 +112,7 @@
       },
       async getApi(idx) {
         await axios
-        .get('https://cors-anywhere.herokuapp.com/http://xkcd.com/' + (this.comic * 15 + idx + 1) + '/info.0.json')
+        .get('https://cors-anywhere.herokuapp.com/http://xkcd.com/' + (this.comic * 10 + idx + 1) + '/info.0.json')
         .then(response => (this.$store.commit('setTab', {"info":response, "index": idx}), this.$set(this.$store.state.apiTab, idx, this.$store.state.apiTab[idx])))
         .catch(error => {
           console.log(error)
@@ -125,7 +125,7 @@
         console.log(this.comic)
         for (let idx = 0; idx < this.apiTab.length; idx++) {
           this.getApi(idx);
-          console.log(this.comic * 15 + idx + 1);
+          console.log(this.comic * 10 + idx + 1);
         }
       },
       nextComic() {
@@ -134,7 +134,7 @@
         console.log(this.comic)
         for (let idx = 0; idx < this.apiTab.length; idx++) {
           this.getApi(idx);
-          console.log(this.comic * 15 + 1);
+          console.log(this.comic * 10 + 1);
         }
       },
       printItem(item) {
