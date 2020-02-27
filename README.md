@@ -13,14 +13,16 @@ You will need to install cURL:
 
 and Yarn or NPM:
 
-Yarn: 
-```curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -```
-
-```echo “deb https://dl.yarnpkg.com/debian/ stable main” | sudo tee /etc/apt/sources.list.d/yarn.list```
+Yarn (make sure you do both commands for yarn at the same time, otherwise it won't install):
+```
+curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
+echo “deb https://dl.yarnpkg.com/debian/ stable main” | sudo tee /etc/apt/sources.list.d/yarn.list
+```
 
 ```sudo apt-get update; sudo apt-get install yarn```
 
-NPM: 
+NPM:
+
 ```sudo apt-get install npm```
 
 Then, just type ```cd NewXKCD``` to go in the cloned repository.
