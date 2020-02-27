@@ -5,7 +5,7 @@
 # Build Setup
 
 ## Install dependencies
-This project is only maintained for Ubuntu right now, any contribution or feedback is really much appreciated.
+This project is only maintained for Ubuntu 18.04 right now, any contribution or feedback is really much appreciated.
 
 You will need to install cURL:
 
