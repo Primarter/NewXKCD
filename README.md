@@ -7,6 +7,8 @@
 ## Install dependencies
 This project is only maintained for Ubuntu 18.04 right now, any contribution or feedback is really much appreciated.
 
+Make sure your node version is up to date, else it will stop the script from starting.
+
 You will need to install cURL:
 
 ```sudo apt-get upgrade; sudo apt-get install curl```
